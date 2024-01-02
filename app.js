@@ -133,9 +133,12 @@ nationality: "Nigerian"
     
 ]
 
-const profiles = nextProfile(data);
+const profiles = profileIterator(data);
 
-function nextProfile(profiles){
+
+showProfile();
+
+function profileIterator(profiles){
     let nextIndex = 0;
 
     return {
@@ -143,15 +146,19 @@ function nextProfile(profiles){
         return nextIndex < profiles.length ?
             {value: profiles[nextIndex++], done:false}: 
             {done:true}; 
-        }
+        },
+
     }
 }    
-document.querySelector('#next').addEventListener('click',showProfile)
+document.querySelector('#next',).addEventListener('click',showProfile)
 
 
-function showProfile(){
-    const currentProfile = profiles.next().value 
-    document.querySelector('#profileDisplay').innerHTML=`
+
+function showProfile(){  
+  let currentProfile = profiles.next().value
+  currentProfile = profiles.prev().value  
+if(currentProfile !== undefined){
+  document.querySelector('#profileDisplay').innerHTML=`
   <ul class="list-group">
     <li class="list-group-item">ID: ${currentProfile.id}</li>
     <li class="list-group-item">Name: ${currentProfile.name}</li>
@@ -161,6 +168,10 @@ function showProfile(){
     <li class="list-group-item">Nationality: ${currentProfile.nationality}</li>
   </ul>
   `
-
-
+}else{
+  window.location.reload()
 }
+}
+
+
+
